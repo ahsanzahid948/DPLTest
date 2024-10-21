@@ -28,7 +28,7 @@ builder.Services.AddCors(options => options.AddPolicy("all", options => {
 }));
 
 // For Entity Framework
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("LocalConnStr")));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("ConnStr")));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 { 
