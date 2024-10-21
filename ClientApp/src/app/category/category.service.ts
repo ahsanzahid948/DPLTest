@@ -12,20 +12,43 @@ export class CategoryService {
   url = 'https://localhost:7021/api/category/';
   constructor(private http: HttpClient) { }
   getCategoryList(): Observable<Category[]> {
-    var result = this.http.get<Category[]>(this.url);
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("jwt")}`
+      })
+    };
+    var result = this.http.get<Category[]>(this.url, httpHeaders);
     console.warn(result);
     return result;
   }
   postCategoryData(productData: Category): Observable<Category> {
-    const httpHeaders = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("jwt")}`
+      }) };
+
     return this.http.post<Category>(this.url, productData, httpHeaders);
   }
+
   updateCategory(product: Category): Observable<Category> {
-    const httpHeaders = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("jwt")}`
+      })
+    };
     return this.http.patch<Category>(this.url, product, httpHeaders);
   }
   deleteCategoryById(id: number): Observable<number> {
-    return this.http.delete<number>(this.url + '?id=' + id);
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("jwt")}`
+      })
+    };
+    return this.http.delete<number>(this.url + '?id=' + id, httpHeaders);
   }
   getProductCategoryById(id: string): Observable<Category> {
     return this.http.get<Category>(this.url + '?id=' + id);

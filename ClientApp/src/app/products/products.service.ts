@@ -12,22 +12,50 @@ export class ProductsService {
   url = 'https://localhost:7021/api/product/';
   constructor(private http: HttpClient) { }
   getProductList(): Observable<Products[]> {
-    var result = this.http.get<Products[]>(this.url);
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("jwt")}`
+      })
+    };
+    var result = this.http.get<Products[]>(this.url, httpHeaders);
     console.warn(result);
     return result;
   }
   postProductData(productData: Products): Observable<Products> {
-    const httpHeaders = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("jwt")}`
+      })
+    };
     return this.http.post<Products>(this.url, productData, httpHeaders);
   }
   updateProduct(product: Products): Observable<Products> {
-    const httpHeaders = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("jwt")}`
+      })
+    };
     return this.http.patch<Products>(this.url, product, httpHeaders);
   }
   deleteProductById(id: number): Observable<number> {
-    return this.http.delete<number>(this.url + '?id=' + id);
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("jwt")}`
+      })
+    };
+    return this.http.delete<number>(this.url + '?id=' + id, httpHeaders);
   }
   getProductDetailsById(id: string): Observable<Products> {
-    return this.http.get<Products>(this.url + '?id=' + id);
+    const httpHeaders = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("jwt")}`
+      })
+    };
+    return this.http.get<Products>(this.url + '?id=' + id, httpHeaders);
   }
 }
